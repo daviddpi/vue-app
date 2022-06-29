@@ -58,133 +58,39 @@
 
     <div class="section">
       <div class="columns">
-        <div class="column">
+        <div class="column is-3" v-for="product in products" :key="product.id">
 
           <div class="card">
             <div class="card-image">
               <figure class="image is-square">
-                <img src="./assets/watch.png" alt="Placeholder image">
+                <img :src="product.src" :alt="product.name">
               </figure>
             </div>
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
                   <figure class="image is-48x48">
-                    <img src="./assets/watch.png" alt="Placeholder image">
+                    <img :src="product.src" :alt="product.name">
                   </figure>
                 </div>
                 <div class="media-content">
-                  <p class="title is-4">Watch</p>
-                  <p v-if="watch.inStock" class="subtitle is-6 tag is-success">130€</p>
-                  <p v-else class="subtitle is-6 tag is-warning">Non disponibile</p>
+                  <p class="title is-4">{{product.name}}</p>
+                  <p v-if="product.inventory > 10" class="subtitle is-6 tag is-success">Disponibile</p>
+                  <p v-else-if="product.inventory > 0 && product.inventory <= 10" class="subtitle is-6 tag is-warning">Quasi esaurito</p>
+                  <p v-else class="subtitle is-6 tag is-danger">Non disponibile</p>
+                  <br>
+                  <p class="subtitle is-6">{{product.price}}€</p>
                 </div>
               </div>
 
               <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+                {{product.description}} 
+                <a>@bulmaio</a>.
                 <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
               </div>
             </div>
           </div> 
 
-        </div>
-
-        <div class="column">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-square">
-                <img src="./assets/shoe.png" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src="./assets/shoe.png" alt="Placeholder image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">Stan Smith</p>
-                  <p v-if="shoes.inStock" class="subtitle is-6 tag is-success">90€</p>
-                  <p v-else class="subtitle is-6 tag is-warning">Non disponibile</p>
-                </div>
-              </div>
-
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-              </div>
-            </div>
-          </div>       
-        </div>
-        <div class="column">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-square">
-                <img src="./assets/glasses.png" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src="./assets/glasses.png" alt="Placeholder image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">Gucci</p>
-                  <p v-if="glasses.inStock" class="subtitle is-6 tag is-success">120€</p>
-                  <p v-else class="subtitle is-6 tag is-warning">Non disponibile</p>
-
-                </div>
-              </div>
-
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column">
-          <div class="card">
-            <div class="card-image">
-              <figure class="image is-square">
-                <img :src="srcBag" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img :src="srcBag" alt="Placeholder image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">Armani</p>
-                  <p v-if="bag.inStock" class="subtitle is-6 tag is-success">90€</p>
-                  <p v-else class="subtitle is-6 tag is-warning">Non disponibile</p>
-                </div>
-              </div>
-
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a>
-                <br>
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -203,19 +109,46 @@ export default {
   data(){
     return {
       home: "Home",
-      srcBag: require("./assets/bag.png"),
-      bag: {
-        inStock: true
-      },
-      shoes: {
-        inStock: false
-      },
-      glasses: {
-        inStock: true
-      },
-      watch: {
-        inStock: false
-      }
+      
+      products: [
+
+        {
+          id: 1,
+          src: require("./assets/bag.png"),
+          name: "Bag",
+          price: "40",
+          inventory: 12,
+          description: "Best Bag"
+
+        },
+        {
+          id: 2,
+          src: require("./assets/glasses.png"),
+          name: "Glasses",
+          price: "120",
+          inventory: 11,
+          description: "Best Glass"
+
+        },
+        {
+          id: 3,
+          src: require("./assets/shoe.png"),
+          name: "Glasses",
+          price: "54",
+          inventory: 0,
+          description: "Best Shoes"
+
+        },
+        {
+          id: 4,
+          src: require("./assets/watch.png"),
+          name: "Glasses",
+          price: "254",
+          inventory: 2,
+          description: "Best Watch"
+
+        },
+      ]
     }
   }
 }
